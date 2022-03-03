@@ -1,7 +1,13 @@
 <MainScreen>:
     name: 'main'
+    auto_button: auto_button
+    armControl: armControl
+    magnetControl: magnetControl
+    moveArm: moveArm
     FloatLayout:
         size_hint: None, None
+
+
 
 	##################
 	##### BUTTONS ####
@@ -19,8 +25,8 @@
             on_release: root.quit()
 
         DPEAButton:  
-            id: auto
-            color: 0.917, 0.796, 0.380, 1
+            id: auto_button
+            color: 137/255, 26/255, 137/255, 1
             text: "Start"
             center_x: root.width * 0.5
             y: root.height * 0.55
@@ -28,14 +34,14 @@
             background_normal: ''
             size_hint: None,None
             size: 300,100
-            on_press: root.auto()
-            on_release: root.resetColors()
+            on_press: root.auto_thread()
+
 
         # Turn on/off gate
         DPEAButton:
             id: armControl
-            color: 0.180, 0.188, 0.980, 1
-            text: "Lower Arm"
+            color: 26/255, 85/255, 137/255, 1
+            text: "Arm Up/Down"
             center_x: root.width * 0.35
             y: root.height * 0.35
             background_color: 0, 0, 0, 0
@@ -43,11 +49,11 @@
             size_hint: None,None
             size: 300,100
             on_press: root.toggleArm()
-            on_release: root.resetColors()
+
 
         DPEAButton:
             id: magnetControl
-            color: 0.180, 0.188, 0.980, 1
+            color: 26/255, 85/255, 137/255, 1
             text: "Hold Ball"
             center_x: root.width * 0.65
             y: root.height * 0.35
@@ -56,7 +62,7 @@
             size_hint: None,None
             size: 300,100
             on_press: root.toggleMagnet()
-            on_release: root.resetColors()
+
 
 	##################
 	##### SLIDERS ####
@@ -66,9 +72,9 @@
             id: moveArm
             orientation: 'horizontal'
             min: 0
-            max: 100 
+            max: 2
             value: root.armPosition
-            step: 1
+            step: .1
             center_x: root.width * 0.6
             y: root.height * 0.15
             size_hint_x: 7
@@ -87,10 +93,12 @@
             halign: 'center'
             y: root.height * 0.75
             color: 0.9, 0.9, 0.9, 1
+            outline_color: 137/255, 26/255, 137/255, 1
+            outline_width: self.font_size *0.15
 
         Label:
             id: armControlLabel
-            text: 'Arm Position: ' + str(root.armPosition)
+            text: 'Arm Position: ' + str(round(moveArm.value,2))
             font_size: 40
             center_x: root.width * 0.22
             y: root.height * 0.15
